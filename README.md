@@ -1,5 +1,5 @@
 # Onehub Golang Library
-```
+```golang
 package main
 
 import (
