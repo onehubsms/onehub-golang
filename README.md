@@ -96,7 +96,7 @@ import (
 
 func main() {
     // endpoint
-    var addContactURL string = "https://api.braceafrica.com/v1/contacts/add"
+    var addContactURL string = "https://api.onehub.co.ke/v1/contacts/add"
 
     // authentication
     var x_username string    = ""
@@ -175,7 +175,7 @@ func main() {
     var contactId string      = ""
 
     // endpoint
-    var editContactURL string = "https://api.braceafrica.com/v1/contacts/edit/" + contactId
+    var editContactURL string = "https://api.onehub.co.ke/v1/contacts/edit/" + contactId
 
     // authentication
     var x_username string     = ""
@@ -247,7 +247,7 @@ import (
 )
 
 func main() {
-    var fetchContactsURL string = "https://api.braceafrica.com/v1/contacts/fetch"
+    var fetchContactsURL string = "https://api.onehub.co.ke/v1/contacts/fetch"
 
     // authentication
     var x_username string     = ""
@@ -315,7 +315,7 @@ import (
 
 func main() {
     // endpoint
-    var deleteContactURL string = "https://api.braceafrica.com/v1/contacts/delete
+    var deleteContactURL string = "https://api.onehub.co.ke/v1/contacts/delete
 
     // authentication
     var x_username string       = ""
@@ -381,7 +381,7 @@ import (
 
 func main() {
     // endpoint
-    var addGroupURL string = "https://api.braceafrica.com/v1/contacts/groups/add"
+    var addGroupURL string = "https://api.onehub.co.ke/v1/contacts/groups/add"
 
     // authentication
     var x_username string = ""
@@ -438,7 +438,7 @@ import (
 func main() {
     var groupId string = ""
     // endpoint
-    var editGroupURL string = "https://api.braceafrica.com/v1/contacts/groups/edit/" + groupId
+    var editGroupURL string = "https://api.onehub.co.ke/v1/contacts/groups/edit/" + groupId
 
     // authentication
     var x_username string = ""
@@ -501,7 +501,7 @@ import (
 
 func main() {
     // endpoint
-    var fetchGroupsURL string = "https://api.braceafrica.com/v1/contacts/groups/fetch"
+    var fetchGroupsURL string = "https://api.onehub.co.ke/v1/contacts/groups/fetch"
 
     // authentication
     var x_username string = ""
@@ -568,7 +568,7 @@ import (
 func main() {
     var groupId string = ""
     // endpoint
-    var addContactsToGroupURL string = "https://api.braceafrica.com/v1/contacts/add/"+groupId
+    var addContactsToGroupURL string = "https://api.onehub.co.ke/v1/contacts/add/"+groupId
 
     // authentication
 
@@ -639,7 +639,7 @@ import (
 func main() {
     var groupId string = ""
     // endpoint
-    var fetchGroupContactsURL string = "https://api.braceafrica.com/v1/contacts/groups/fetch/" + groupId
+    var fetchGroupContactsURL string = "https://api.onehub.co.ke/v1/contacts/groups/fetch/" + groupId
 
     // authentication
     var x_username string = ""
@@ -716,7 +716,7 @@ import (
 
 func main() {
     var groupId string = ""
-    var deleteGroupContactsURL string = "https://api.braceafrica.com/v1/contacts/delete/"+groupId
+    var deleteGroupContactsURL string = "https://api.onehub.co.ke/v1/contacts/delete/"+groupId
 
     // authentication
     var x_username string = ""
@@ -780,7 +780,7 @@ import (
 
 func main() {
     // endpoint
-    var deleteGroupURL string = "https://api.braceafrica.com/v1/contacts/groups/delete"
+    var deleteGroupURL string = "https://api.onehub.co.ke/v1/contacts/groups/delete"
 
     // authentication
 
@@ -846,7 +846,7 @@ import (
 
 func main() {
     // endpoint
-    var fetchSenderidsURL string = "https://api.braceafrica.com/v1/sms/senderIds/fetch"
+    var fetchSenderidsURL string = "https://api.onehub.co.ke/v1/sms/senderIds/fetch"
 
     // authentication
     var x_username string = ""
@@ -914,7 +914,7 @@ import (
 
 func main() {
     // endpoint
-    var fetchBalanceURL string = "https://api.braceafrica.com/v1/billing/balance"
+    var fetchBalanceURL string = "https://api.onehub.co.ke/v1/billing/balance"
 
     // authentication
     var x_username string = ""
@@ -972,7 +972,7 @@ import (
 
 func main() {
     // endpoint
-    var fetchStatementURL string = "https://api.braceafrica.com/v1/billing/topups"
+    var fetchStatementURL string = "https://api.onehub.co.ke/v1/billing/topups"
 
     // authentication
     var x_username string = ""
