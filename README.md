@@ -902,4 +902,143 @@ func main() {
     ]
 }
 ```
+# Onehub Golang Fetch Account Balance Library
+```golang
+package main
+
+import (
+    "fmt"
+    "io/ioutil"
+    "net/http"
+)
+
+func main() {
+    // endpoint
+    var fetchBalanceURL string = "https://api.braceafrica.com/v1/billing/balance"
+
+    // authentication
+    var x_username string = ""
+    var x_apikey string = ""
+
+    // request
+    request, err := http.NewRequest("GET", fetchBalanceURL, nil)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    // headers
+    request.Header.Set("Content-Type", "application/json")
+    request.Header.Set("x-api-user", x_username)
+    request.Header.Set("x-api-key", x_apikey)
+
+    // response
+    response, err := http.DefaultClient.Do(request)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    body, err := ioutil.ReadAll(response.Body)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    defer response.Body.Close()
+    fmt.Println(string(body))
+}
+```
+# Response Body Parameters
+## Response in case of successful fetching account balance:
+```json
+{
+    "status": 200,
+    "data": {
+        "amount": 6080.11,
+        "currency": "KES"
+    }
+}
+```
+# Onehub Golang Fetch Account Statement Library
+```golang
+package main
+
+import (
+    "fmt"
+    "io/ioutil"
+    "net/http"
+)
+
+func main() {
+    // endpoint
+    var fetchStatementURL string = "https://api.braceafrica.com/v1/billing/topups"
+
+    // authentication
+    var x_username string = ""
+    var x_apikey string = ""
+
+    // request
+    request, err := http.NewRequest("GET", fetchStatementURL, nil)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    // headers
+    request.Header.Set("Content-Type", "application/json")
+    request.Header.Set("x-api-user", x_username)
+    request.Header.Set("x-api-key", x_apikey)
+
+    // response
+
+    response, err := http.DefaultClient.Do(request)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    body, err := ioutil.ReadAll(response.Body)
+
+    if err != nil {
+        panic(err.Error())
+    }
+    defer response.Body.Close()
+
+    fmt.Println(string(body))
+}
+```
+# Response Body Parameters
+## Response in case of successful fetching account statement:
+```json
+{
+    "status": 200,
+    "data": [
+        {
+            "id": 4155,
+            "amount": "KES 500",
+            "description": "Mpesa Code ML689276",
+            "type": "MPESA",
+            "date_created": "2019-12-22T14:38:44.000Z",
+            "currency": "KES"
+        }
+        {
+            "id": 4338,
+            "amount": "KES 1100",
+            "description": "Mpesa Code MJUYEO67M",
+            "type": "MPESA",
+            "date_created": "2019-12-22T14:38:44.000Z",
+            "currency": "KES"
+        }
+        {
+            "id": 4598,
+            "amount": "KES 8000",
+            "description": "Admin Top Up",
+            "type": "Admin",
+            "date_created": "2019-12-22T14:38:44.000Z",
+            "currency": "KES"
+        }
+    ]
+}
+```
 
