@@ -366,4 +366,472 @@ func main() {
 `tags` - `[Type: String]`	`[Optional]` - A unique field to help group contacts e.g football,team,family.
 
 `groups` - `[Type: String]`	`[Optional]` - This is a group name that the contacts will be added to. It must be an existing group.
+# Onehub Golang Create Group Library
+```golang
+package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io/ioutil"
+    "net/http"
+    "strconv"
+)
+
+func main() {
+    // endpoint
+    var addGroupURL string = "https://api.braceafrica.com/v1/contacts/groups/add"
+
+    // authentication
+    var x_username string = ""
+    var x_apikey string = ""
+
+    // data
+    groupData := map[string]string{
+        "name": "",
+        "tags": "",
+    }
+
+    params, _ := json.Marshal(groupData)
+
+    request, err := http.NewRequest("POST", addGroupURL, bytes.NewBuffer(params))
+
+    request.Header.Add("Content-Type", "application/json")
+    request.Header.Set("x-api-user", x_username)
+    request.Header.Set("x-api-key", x_apikey)
+    request.Header.Set("Content-Length", strconv.Itoa(len(params)))
+
+    response, err := http.DefaultClient.Do(request)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    body, err := ioutil.ReadAll(response.Body)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    defer response.Body.Close()
+
+    fmt.Println(string(body))
+}
+```
+# Request Body Parameters
+`name` - `[Type: String]` `[Required]` - The group name.
+
+`tags` - `[Type: String]`	`[Optional]` - These are tags in the contacts you want to link. The group will be formed and the contacts automatically linked to the group.
+# Onehub Golang Edit Group Library
+```golang
+package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io/ioutil"
+    "net/http"
+)
+
+func main() {
+    var groupId string = ""
+    // endpoint
+    var editGroupURL string = "https://api.braceafrica.com/v1/contacts/groups/edit/" + groupId
+
+    // authentication
+    var x_username string = ""
+    var x_apikey string = ""
+
+    // data
+    groupData := map[string]string{
+        "name": "",
+    }
+
+    params, _ := json.Marshal(groupData)
+
+    request, err := http.NewRequest("POST", editGroupURL, bytes.NewBuffer(params))
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    // headers
+    request.Header.Set("Content-Type", "application/json")
+    request.Header.Set("x-api-user", x_username)
+    request.Header.Set("x-api-key", x_apikey)
+
+    response, err := http.DefaultClient.Do(request)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    body, err := ioutil.ReadAll(response.Body)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    fmt.Println(string(body))
+}
+```
+# Request Body Parameters
+`name` - `[Type: String]` `[Required]` - The group name.
+
+`tags` - `[Type: String]`	`[Optional]` - These are tags in the contacts you want to link. The group will be formed and the contacts automatically linked to the group.
+# Response Body Parameters
+## Response in case of successful editing of a group:
+```json
+{
+    "status": 200,
+    "message": "Group has been updated"
+}
+```
+# Onehub Golang Fetch Group Library
+```golang
+package main
+
+import (
+    "fmt"
+    "io/ioutil"
+    "net/http"
+)
+
+func main() {
+    // endpoint
+    var fetchGroupsURL string = "https://api.braceafrica.com/v1/contacts/groups/fetch"
+
+    // authentication
+    var x_username string = ""
+    var x_apikey string = ""
+
+    // request
+    request, err := http.NewRequest("GET", fetchGroupsURL, nil)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    // headers
+
+    request.Header.Set("Content-Type", "application/json")
+    request.Header.Set("x-api-user", x_username)
+    request.Header.Set("x-api-key", x_apikey)
+
+    // response
+    response, err := http.DefaultClient.Do(request)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    body, _ := ioutil.ReadAll(response.Body)
+
+    defer response.Body.Close()
+
+    fmt.Println(string(body))
+}
+```
+# Request Body Parameters
+`name` - `[Type: String]` `[Required]` - The group name.
+
+`tags` - `[Type: String]`	`[Optional]` - These are tags in the contacts you want to link. The group will be formed and the contacts automatically linked to the group.
+# Response Body Parameters
+## Response in case of successful fetching of a group:
+```json
+{
+    "status": 200,
+    "groups": [
+        {
+            "groupId": 12,
+            "groupName": "Kenzu Safaris",
+            "createdOn": "2019-05-17T00:00:00.000Z",
+            "contacts": []
+        }
+    ]
+}
+```
+# Onehub Golang Link Contacts To Group Library
+```golang
+package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io/ioutil"
+    "net/http"
+)
+
+func main() {
+    var groupId string = ""
+    // endpoint
+    var addContactsToGroupURL string = "https://api.braceafrica.com/v1/contacts/add/"+groupId
+
+    // authentication
+
+    var x_username string = ""
+    var x_apikey string = ""
+
+    // data
+
+    data:= map[string][]int{
+        "contactIds":[]int{1,2,3,4}
+    }
+
+    params, _ := json.Marshal(data)
+
+    // request
+
+    request, err := http.NewRequest("POST", addContactsToGroupURL, bytes.NewBuffer(params))
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    // headers
+    request.Header.Set("Content-Type", "application/json")
+    request.Header.Set("x-api-user", x_username)
+    request.Header.Set("x-api-key", x_apikey)
+
+    // response
+    response, err := http.DefaultClient.Do(request)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    body, err := ioutil.ReadAll(response.Body)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    defer response.Body.Close()
+
+    fmt.Println(string(body))
+}
+```
+# Request Body Parameters
+`name` - `[Type: String]` `[Required]` - The group name.
+
+`tags` - `[Type: String]`	`[Optional]` - These are tags in the contacts you want to link. The group will be formed and the contacts automatically linked to the group.
+# Response Body Parameters
+## Response in case of successful linking contacts to a group:
+```json
+{
+    "status": 200,
+    "message": "The contacts linked to group"
+}
+```
+# Onehub Golang Fetch Group Contacts Library
+```golang
+package main
+
+import (
+    "fmt"
+    "io/ioutil"
+    "net/http"
+)
+
+func main() {
+    var groupId string = ""
+    // endpoint
+    var fetchGroupContactsURL string = "https://api.braceafrica.com/v1/contacts/groups/fetch/" + groupId
+
+    // authentication
+    var x_username string = ""
+    var x_apikey string = ""
+
+    // request
+    request, err := http.NewRequest("GET", fetchGroupContactsURL, nil)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    // headers
+    request.Header.Set("Content-Type", "application/json")
+    request.Header.Set("x-api-user", x_username)
+    request.Header.Set("x-api-key", x_apikey)
+
+    // response
+    response, err := http.DefaultClient.Do(request)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    body, err := ioutil.ReadAll(response.Body)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    defer response.Body.Close()
+
+    fmt.Println(string(body))
+
+}
+```
+# Request Body Parameters
+`name` - `[Type: String]` `[Required]` - The group name.
+
+`tags` - `[Type: String]`	`[Optional]` - These are tags in the contacts you want to link. The group will be formed and the contacts automatically linked to the group.
+# Response Body Parameters
+## Response in case of successful fetching group contacts:
+```json
+{
+    "groupId": 2536,
+    "groupName": "Chama Ya Mama",
+    "contacts": [
+        {
+            "id": 65,
+            "name": "John Doe",
+            "phoneNumber": "+2547xxx4578",
+            "tags": "chairman"
+        },
+        {
+            "id": 63,
+            "name": "Pendo JM",
+            "phoneNumber": "+2547xxy4597",
+            "tags": "member"
+        }
+    ]
+}
+```
+# Onehub Golang Remove Group Contacts Library
+```golang
+package main
+
+import (
+    "bytes"
+    "encoding/json"
+    "fmt"
+    "io/ioutil"
+    "net/http"
+)
+
+func main() {
+    var groupId string = ""
+    var deleteGroupContactsURL string = "https://api.braceafrica.com/v1/contacts/delete/"+groupId
+
+    // authentication
+    var x_username string = ""
+    var x_apikey string = ""
+
+    // data
+    contactIds := map[string][]int{
+        "contactIds":[]int{1,2,3,4}
+    }
+
+    params, _ := json.Marshal(contactIds)
+
+    // request
+    request, err := http.NewRequest("POST", deleteGroupContactsURL, bytes.NewBuffer(params))
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    request.Header.Set("Content-Type", "application/json")
+    request.Header.Set("x-api-user", x_username)
+    request.Header.Set("x-api-key", x_apikey)
+
+    // response
+    response, err := http.DefaultClient.Do(request)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    body, err := ioutil.ReadAll(response.Body)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    fmt.Println(string(body))
+}
+```
+# Request Body Parameters
+`name` - `[Type: String]` `[Required]` - The group name.
+
+`tags` - `[Type: String]`	`[Optional]` - These are tags in the contacts you want to link. The group will be formed and the contacts automatically linked to the group.
+# Response Body Parameters
+## Response in case of successful removing group contacts:
+```json
+{
+    "status": 200,
+    "message": "Contacts removed form group"
+}
+```
+# Onehub Golang Delete Groups Library
+```golang
+package main
+
+import (
+    "fmt"
+    "io/ioutil"
+    "net/http"
+)
+
+func main() {
+    // endpoint
+    var deleteGroupURL string = "https://api.braceafrica.com/v1/contacts/groups/delete"
+
+    // authentication
+
+    var x_username string = ""
+    var x_apikey string = ""
+
+    groupIds := map[string][]int{
+        "groupIds":[]int{1,2,3,4}
+    }
+
+    params, _ := json.Marshal(groupIds)
+
+    // request
+    request, err := http.NewRequest("POST", deleteGroupURL, bytes.NewBuffer(params))
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    // headers
+    request.Header.Set("Content-Type", "application/json")
+    request.Header.Set("x-api-user", x_username)
+    request.Header.Set("x-api-key", x_apikey)
+
+    // response
+    response, err := http.DefaultClient.Do(request)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    body, err := ioutil.ReadAll(response.Body)
+
+    if err != nil {
+        panic(err.Error())
+    }
+
+    fmt.Println(string(body))
+
+}
+```
+# Request Body Parameters
+`name` - `[Type: String]` `[Required]` - The group name.
+
+`tags` - `[Type: String]`	`[Optional]` - These are tags in the contacts you want to link. The group will be formed and the contacts automatically linked to the group.
+# Response Body Parameters
+## Response in case of successful deleting groups:
+```json
+{
+    "status": 200,
+    "message": "4 groups have been deleted"
+}
+```
 
